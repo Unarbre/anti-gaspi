@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email</title>
+    <style>
+        .button {
+            margin: 10px;
+        }
+        .button-container {
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <p>Bonjour <span th:utext="${userName}"></span>,</p>
+        <p>Voici le résumé de votre annonce Anti Gaspi : </p>
+    </div>
+    <div>
+        <p>Titre : <span th:utext="${offerTitle}"></span></p>
+        <p>Description : <span th:utext="${offerDescription}"></span></p>
+    </div>
+
+    <div class="button-container">
+        <a th:href="@{${validateLink}}" class="button">
+            <button type="button">Valider l'annonce</button>
+        </a>
+        <a th:href="@{${deleteLink}}" class="button">
+            <button type="button">Supprimer l'annonce</button>
+        </a>
+    </div>
+
+    <div>
+        <p>Cordialement,</p>
+        <p>L'équipe Anti Gaspi</p>
+    </div>
+</div>
+
+</body>
+</html>
