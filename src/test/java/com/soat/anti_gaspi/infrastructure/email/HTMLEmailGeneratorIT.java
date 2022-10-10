@@ -14,11 +14,11 @@ class HTMLEmailGeneratorIT {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-    private HTMLEmailGenerator htmlEmailGenerator;
+    private ThymeLeafEmailGenerator htmlEmailGenerator;
 
     @BeforeEach
     void setup() {
-        htmlEmailGenerator = new HTMLEmailGenerator(templateEngine);
+        htmlEmailGenerator = new ThymeLeafEmailGenerator(templateEngine);
     }
 
     @Test

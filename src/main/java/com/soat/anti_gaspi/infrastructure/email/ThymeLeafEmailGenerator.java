@@ -5,11 +5,11 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Service
-public class HTMLEmailGenerator implements EmailGenerator {
+public class ThymeLeafEmailGenerator implements EmailGenerator {
     private static final String TEMPLATE_FILE_NAME = "confirmation-email-template.html";
     private final SpringTemplateEngine templateEngine;
 
-    public HTMLEmailGenerator(SpringTemplateEngine templateEngine) {
+    public ThymeLeafEmailGenerator(SpringTemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 
