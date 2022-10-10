@@ -9,16 +9,19 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-class HTMLEmailGeneratorIT {
+class ThymeLeafEmailGeneratorIT {
 
     @Autowired
     private SpringTemplateEngine templateEngine;
+
+    @Autowired
+    private EmailThymeLeafContextFactory emailThymeLeafContextFactory;
 
     private ThymeLeafEmailGenerator htmlEmailGenerator;
 
     @BeforeEach
     void setup() {
-        htmlEmailGenerator = new ThymeLeafEmailGenerator(templateEngine);
+        htmlEmailGenerator = new ThymeLeafEmailGenerator(templateEngine, emailThymeLeafContextFactory);
     }
 
     @Test

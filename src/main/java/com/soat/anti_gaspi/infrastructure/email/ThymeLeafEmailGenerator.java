@@ -1,31 +1,24 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.springframework.stereotype.Component;
+import org.thymeleaf.spring5.ISpringTemplateEngine;
 
-@Service
+@Component
 public class ThymeLeafEmailGenerator implements EmailGenerator {
     private static final String TEMPLATE_FILE_NAME = "confirmation-email-template.html";
-    private final SpringTemplateEngine templateEngine;
+    private final ISpringTemplateEngine templateEngine;
+    private final EmailThymeLeafContextFactory emailThymeLeafContextFactory;
 
-    public ThymeLeafEmailGenerator(SpringTemplateEngine templateEngine) {
+    public ThymeLeafEmailGenerator(ISpringTemplateEngine templateEngine, EmailThymeLeafContextFactory emailThymeLeafContextFactory) {
         this.templateEngine = templateEngine;
+        this.emailThymeLeafContextFactory = emailThymeLeafContextFactory;
     }
 
     public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) {
-        Context ctx = new Context();
 
-        ctx.setVariable("offerTitle", "title1");
-        ctx.setVariable("offerDescription", "description1");
-        ctx.setVariable("validateLink", "http://localhost:8080/validate/1");
-        ctx.setVariable("rejectLink", "http://localhost:8080/reject/1");
+        var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 
-
-        var result = templateEngine.process(TEMPLATE_FILE_NAME, ctx);
-
-        System.out.println(result);
-        return result;
+        return templateEngine.process(TEMPLATE_FILE_NAME, ctx);
     }
 
 }
