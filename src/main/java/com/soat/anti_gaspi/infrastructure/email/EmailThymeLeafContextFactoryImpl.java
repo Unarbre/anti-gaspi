@@ -10,9 +10,9 @@ public class EmailThymeLeafContextFactoryImpl implements EmailThymeLeafContextFa
         Context ctx = new Context();
 
         ctx.setVariable("title", offerConfirmationParameters.getTitle());
-        ctx.setVariable("offerDescription", "description1");
-        ctx.setVariable("validateLink", "http://localhost:8080/validate/1");
-        ctx.setVariable("rejectLink", "http://localhost:8080/reject/1");
+        ctx.setVariable("description", offerConfirmationParameters.getDescription());
+        ctx.setVariable("validateLink", offerConfirmationParameters.getValidateLink());
+        ctx.setVariable("rejectLink", offerConfirmationParameters.getRejectLink());
         return ctx;
     }
 }

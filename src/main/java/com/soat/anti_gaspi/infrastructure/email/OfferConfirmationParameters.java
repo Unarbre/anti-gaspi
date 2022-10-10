@@ -18,4 +18,15 @@ public class OfferConfirmationParameters {
         return title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getValidateLink() {
+        return validateLink;
+    }
+
+    public String getRejectLink() {
+        return rejectLink;
+    }
 }

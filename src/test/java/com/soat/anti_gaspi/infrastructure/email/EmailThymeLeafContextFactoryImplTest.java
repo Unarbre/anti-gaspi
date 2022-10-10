@@ -13,11 +13,14 @@ class EmailThymeLeafContextFactoryImplTest {
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
                 "title1",
                 "description1",
-                "http://validation-link.com",
-                "http://deletion-link.com");
+                "https://validation-link.com",
+                "https://deletion-link.com");
 
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 
         assertThat("title1").isEqualTo(ctx.getVariable("title"));
+        assertThat("description1").isEqualTo(ctx.getVariable("description"));
+        assertThat("https://validation-link.com").isEqualTo(ctx.getVariable("validateLink"));
+        assertThat("https://deletion-link.com").isEqualTo(ctx.getVariable("rejectLink"));
     }
 }
