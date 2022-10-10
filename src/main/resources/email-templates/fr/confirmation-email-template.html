@@ -4,31 +4,50 @@
     <meta charset="UTF-8">
     <title>Email</title>
     <style>
-        .button {
+
+        .validation-button, .deletion-button {
             margin: 10px;
+            color: white;
+            border: none;
+            padding: 10px;
+        }
+        .validation-button {
+            background-color: deepskyblue;
+        }
+
+        .deletion-button {
+            background-color: indianred;
+        }
+
+        button{
+            ba: red;
         }
         .button-container {
-            margin: 30px;
+            margin: 10px;
+        }
+
+        .text-bold {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 <div>
     <div>
-        <p>Bonjour <span th:utext="${userName}"></span>,</p>
-        <p>Voici le résumé de votre annonce Anti Gaspi : </p>
+        <p>Bonjour <span th:utext="${userName}" ></span>,</p>
+        <p>Voici le résumé de votre annonce Anti Gaspi</p>
     </div>
     <div>
-        <p>Titre : <span th:utext="${offerTitle}"></span></p>
+        <p>Titre : <span class="text-bold" th:utext="${offerTitle}"></span></p>
         <p>Description : <span th:utext="${offerDescription}"></span></p>
     </div>
 
     <div class="button-container">
-        <a th:href="@{${validateLink}}" class="button">
-            <button type="button">Valider l'annonce</button>
+        <a th:href="@{${validateLink}}">
+            <button type="button" class="validation-button">Valider l'annonce</button>
         </a>
-        <a th:href="@{${deleteLink}}" class="button">
-            <button type="button">Supprimer l'annonce</button>
+        <a th:href="@{${deleteLink}}">
+            <button type="button" class="deletion-button">Supprimer l'annonce</button>
         </a>
     </div>
 
