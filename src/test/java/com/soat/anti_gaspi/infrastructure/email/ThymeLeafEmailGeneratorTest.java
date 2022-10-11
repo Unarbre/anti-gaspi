@@ -1,12 +1,10 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
-import javassist.NotFoundException;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
@@ -45,7 +43,7 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_call_factory() throws MissingOfferParametersException {
+    void should_call_factory() throws NullOfferConfirmationException {
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
                 "t",
                 "d",
@@ -63,7 +61,7 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_call_engine_process() throws MissingOfferParametersException {
+    void should_call_engine_process() throws NullOfferConfirmationException {
         Context ctx = new Context();
 
         when(emailThymeLeafContextFactory.createEmailTemplateContext(validOffer)).thenReturn(ctx);
@@ -74,7 +72,7 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_return_correct_template() throws MissingOfferParametersException {
+    void should_return_correct_template() throws NullOfferConfirmationException {
         Context ctx = new Context();
         var expected = "EMAIL BODY";
 

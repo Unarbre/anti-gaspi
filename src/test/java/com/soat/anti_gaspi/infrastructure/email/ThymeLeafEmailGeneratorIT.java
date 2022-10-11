@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.ResourceUtils;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+// TODO config par défaut de l'import a retirer
 import java.io.*;
 import java.nio.file.Files;
 
@@ -32,7 +33,7 @@ class ThymeLeafEmailGeneratorIT {
     }
 // TODO elaborer le test
     @Test
-    void should_process_with_template_file_name_and_context() throws IOException, MissingOfferParametersException {
+    void should_process_with_template_file_name_and_context() throws IOException, NullOfferConfirmationException {
         var parameters = new OfferConfirmationParameters(
                 "a title",
                 "a description",
@@ -44,6 +45,7 @@ class ThymeLeafEmailGeneratorIT {
                 "http/deletion.com"
         );
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
+        // TODO html shall be validated without using a write file. Better use an html parser validator (lib ?)
 
         File file = ResourceUtils.getFile("classpath:email-template.fr/confirmation-email-test.html");
         String expected = Files.readString(file.toPath());
@@ -51,7 +53,7 @@ class ThymeLeafEmailGeneratorIT {
     }
 
     @Test
-    void should_throw_MissingOffer_when_offer_confirmation_is_null() throws IOException, MissingOfferParametersException {
+    void should_throw_MissingOffer_when_offer_confirmation_is_null() throws IOException, NullOfferConfirmationException {
         OfferConfirmationParameters parameters = null;
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
 

@@ -1,15 +1,15 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.context.Context;
 
 @Component
 public class EmailThymeLeafContextFactoryImpl implements EmailThymeLeafContextFactory {
     @Override
-    public Context createEmailTemplateContext(OfferConfirmationParameters offerConfirmationParameters) throws MissingOfferParametersException {
+    public Context createEmailTemplateContext(OfferConfirmationParameters offerConfirmationParameters) throws NullOfferConfirmationException {
         if (offerConfirmationParameters == null) {
-            throw new MissingOfferParametersException("Offer not found");
+            throw new NullOfferConfirmationException("Offer confirmation was null");
         }
 
         Context ctx = new Context();

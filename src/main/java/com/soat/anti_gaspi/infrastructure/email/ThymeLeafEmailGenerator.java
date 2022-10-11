@@ -1,7 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
-import javassist.NotFoundException;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
 
@@ -16,7 +15,7 @@ public class ThymeLeafEmailGenerator implements EmailGenerator {
         this.emailThymeLeafContextFactory = emailThymeLeafContextFactory;
     }
 
-    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws MissingOfferParametersException {
+    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NullOfferConfirmationException {
 
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 

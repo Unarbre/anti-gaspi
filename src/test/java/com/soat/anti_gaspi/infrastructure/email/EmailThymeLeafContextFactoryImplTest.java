@@ -1,7 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
-import javassist.NotFoundException;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class EmailThymeLeafContextFactoryImplTest {
     }
 
     @Test
-    void should_create_context_with_offer_parameters() throws MissingOfferParametersException {
+    void should_create_context_with_offer_parameters() throws NullOfferConfirmationException {
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
         OfferConfirmationParameters offerConfirmationParameters = offer;
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
@@ -51,11 +50,11 @@ class EmailThymeLeafContextFactoryImplTest {
     void should_throw_error_on_null_offer(){
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
         offer = null;
-        MissingOfferParametersException missingOfferParametersException = Assertions.assertThrows(MissingOfferParametersException.class, () -> {
+        NullOfferConfirmationException nullOfferConfirmationException = Assertions.assertThrows(NullOfferConfirmationException.class, () -> {
             emailThymeLeafContextFactory.createEmailTemplateContext(offer);
         });
 
-        assertThat(missingOfferParametersException.getMessage()).isEqualTo("Not found");
+        assertThat(nullOfferConfirmationException.getMessage()).isEqualTo("Offer confirmation was null");
 
     }
 }
