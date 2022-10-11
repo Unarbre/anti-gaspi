@@ -23,10 +23,10 @@ class ThymeLeafEmailGeneratorTest {
 
     @Mock
     private EmailThymeLeafContextFactory emailThymeLeafContextFactory;
+    // TODO instancier plutot que mock
 
     @BeforeEach
     void setup() {
-        templateEngine = Mockito.mock(ISpringTemplateEngine.class);
         thymeLeafEmailGenerator = new ThymeLeafEmailGenerator(templateEngine, emailThymeLeafContextFactory);
     }
 

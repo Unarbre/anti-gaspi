@@ -10,8 +10,9 @@ class EmailThymeLeafContextFactoryImplTest {
     @Test
     void should_create_context_with_offer_parameters(){
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
+        // TODO test offer s'il est null'
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
-                "title1",
+                "title1", // TODO si null on fait quoi
                 "description1",
                 "https://validation-link.com",
                 "https://deletion-link.com");

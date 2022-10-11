@@ -19,11 +19,13 @@ class ThymeLeafEmailGeneratorIT {
 
     private ThymeLeafEmailGenerator htmlEmailGenerator;
 
+    // TODO remplacer le fichier dans test
     @BeforeEach
     void setup() {
+        // TODO authowired ça
         htmlEmailGenerator = new ThymeLeafEmailGenerator(templateEngine, emailThymeLeafContextFactory);
     }
-
+// TODO elaborer le test
     @Test
     void should_process_with_template_file_name_and_context() {
         var parameters = new OfferConfirmationParameters(
@@ -33,7 +35,7 @@ class ThymeLeafEmailGeneratorIT {
                 "http/deletion.com"
         );
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
-
+//TODO mettre ça dans un fichier
         var expectedOutput = """
                 <!DOCTYPE html>
                 <html lang="en">
