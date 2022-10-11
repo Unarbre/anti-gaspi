@@ -1,5 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class ThymeLeafEmailGeneratorIT {
     }
 // TODO elaborer le test
     @Test
-    void should_process_with_template_file_name_and_context() throws NotFoundException, IOException {
+    void should_process_with_template_file_name_and_context() throws IOException, MissingOfferParametersException {
         var parameters = new OfferConfirmationParameters(
                 "a title",
                 "a description",

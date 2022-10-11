@@ -1,10 +1,10 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.client.HttpClientErrorException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -32,7 +32,7 @@ class EmailThymeLeafContextFactoryImplTest {
     }
 
     @Test
-    void should_create_context_with_offer_parameters() throws NotFoundException {
+    void should_create_context_with_offer_parameters() throws MissingOfferParametersException {
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
         OfferConfirmationParameters offerConfirmationParameters = offer;
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);

@@ -1,9 +1,10 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
 import javassist.NotFoundException;
 import org.thymeleaf.context.Context;
 
 
 public interface EmailThymeLeafContextFactory {
-    Context createEmailTemplateContext(OfferConfirmationParameters offerConfirmationParameters) throws NotFoundException;
+    Context createEmailTemplateContext(OfferConfirmationParameters offerConfirmationParameters) throws MissingOfferParametersException;
 }
