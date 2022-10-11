@@ -31,6 +31,10 @@ class ThymeLeafEmailGeneratorIT {
         var parameters = new OfferConfirmationParameters(
                 "a title",
                 "a description",
+                "an username",
+                "an address",
+                "01/01/01",
+                "02/02/02",
                 "http://validation.com",
                 "http/deletion.com"
         );

@@ -18,6 +18,18 @@ class ThymeLeafEmailGeneratorTest {
     private static final String TEMPLATE_FILE_NAME = "confirmation-email-template.html";
     private ThymeLeafEmailGenerator thymeLeafEmailGenerator;
 
+    private OfferConfirmationParameters validOffer = new OfferConfirmationParameters(
+            "t",
+            "d",
+            "u",
+            "a",
+            "01/02/03",
+            "01/02/05",
+            "v",
+            "r"
+
+    );
+
     @Mock
     private ISpringTemplateEngine templateEngine;
 
@@ -35,6 +47,10 @@ class ThymeLeafEmailGeneratorTest {
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
                 "t",
                 "d",
+                "u",
+                "a",
+                "01/02/03",
+                "01/02/05",
                 "v",
                 "r"
 
@@ -48,15 +64,9 @@ class ThymeLeafEmailGeneratorTest {
     void should_call_engine_process() {
         Context ctx = new Context();
 
-        OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
-                "t",
-                "d",
-                "v",
-                "r"
-        );
-        when(emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters)).thenReturn(ctx);
+        when(emailThymeLeafContextFactory.createEmailTemplateContext(validOffer)).thenReturn(ctx);
 
-        thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
+        thymeLeafEmailGenerator.generateEmailFromTemplate(validOffer);
 
         verify(templateEngine, times(1)).process(TEMPLATE_FILE_NAME, ctx);
     }
@@ -66,16 +76,11 @@ class ThymeLeafEmailGeneratorTest {
         Context ctx = new Context();
         var expected = "EMAIL BODY";
 
-        OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
-                "t",
-                "d",
-                "v",
-                "r"
-        );
-        when(emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters)).thenReturn(ctx);
+
+        when(emailThymeLeafContextFactory.createEmailTemplateContext(validOffer)).thenReturn(ctx);
         when(templateEngine.process(TEMPLATE_FILE_NAME, ctx)).thenReturn(expected);
 
-        var result = thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
+        var result = thymeLeafEmailGenerator.generateEmailFromTemplate(validOffer);
 
         assertThat(expected).isEqualTo(result);
     }
