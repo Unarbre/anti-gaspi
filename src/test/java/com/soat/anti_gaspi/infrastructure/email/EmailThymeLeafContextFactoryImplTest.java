@@ -51,11 +51,11 @@ class EmailThymeLeafContextFactoryImplTest {
     void should_throw_error_on_null_offer(){
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
         offer = null;
-        NotFoundException notFound = Assertions.assertThrows(NotFoundException.class, () -> {
+        MissingOfferParametersException missingOfferParametersException = Assertions.assertThrows(MissingOfferParametersException.class, () -> {
             emailThymeLeafContextFactory.createEmailTemplateContext(offer);
         });
 
-        assertThat(notFound.getMessage()).isEqualTo("Offer is null");
+        assertThat(missingOfferParametersException.getMessage()).isEqualTo("Not found");
 
     }
 }

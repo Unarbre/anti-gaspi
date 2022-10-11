@@ -1,19 +1,14 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
 import com.soat.anti_gaspi.infrastructure.email.exceptions.MissingOfferParametersException;
-import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.ResourceUtils;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -49,7 +44,18 @@ class ThymeLeafEmailGeneratorIT {
                 "http/deletion.com"
         );
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
-        File file = ResourceUtils.getFile("classpath:template/confirmation-email-test.html");
+
+        File file = ResourceUtils.getFile("classpath:email-template.fr/confirmation-email-test.html");
+        String expected = Files.readString(file.toPath());
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    void should_throw_MissingOffer_when_offer_confirmation_is_null() throws IOException, MissingOfferParametersException {
+        OfferConfirmationParameters parameters = null;
+        var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
+
+        File file = ResourceUtils.getFile("classpath:email-template.fr/confirmation-email-test.html");
         String expected = Files.readString(file.toPath());
         assertThat(result).isEqualTo(expected);
     }
