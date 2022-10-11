@@ -2,17 +2,19 @@ package com.soat.anti_gaspi.infrastructure.mail_sender;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 
 @Configuration
-public class MailSenderConfiguration {
+public class EmailSenderConfiguration {
 
 
     @Bean
-    public JavaMailSenderImpl getJavaMailSender() {
+    public JavaMailSender javaMailSender() {
+        // TODO variabiliser / mettre en spring property
         var mailSender = new JavaMailSenderImpl();
 
         mailSender.setHost("smtp.gmail.com");

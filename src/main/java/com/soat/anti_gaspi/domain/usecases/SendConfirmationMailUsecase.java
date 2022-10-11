@@ -1,17 +1,17 @@
 package com.soat.anti_gaspi.domain.usecases;
 
-import com.soat.anti_gaspi.domain.Mail;
-import com.soat.anti_gaspi.domain.MailSender;
+import com.soat.anti_gaspi.domain.EmailInformation;
+import com.soat.anti_gaspi.domain.EmailSender;
 
 public class SendConfirmationMailUsecase {
 
-    private final MailSender mailSender;
+    private final EmailSender emailSender;
 
-    public SendConfirmationMailUsecase(MailSender mailSender) {
-        this.mailSender = mailSender;
+    public SendConfirmationMailUsecase(EmailSender emailSender) {
+        this.emailSender = emailSender;
     }
 
-    public void send(Mail mail) {
-        mailSender.send(mail);
+    public void send(EmailInformation mail) {
+        emailSender.send(mail);
     }
 }
