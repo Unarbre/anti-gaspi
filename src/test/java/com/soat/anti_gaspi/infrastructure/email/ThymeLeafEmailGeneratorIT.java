@@ -1,10 +1,19 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.ResourceUtils;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -27,7 +36,7 @@ class ThymeLeafEmailGeneratorIT {
     }
 // TODO elaborer le test
     @Test
-    void should_process_with_template_file_name_and_context() {
+    void should_process_with_template_file_name_and_context() throws NotFoundException, IOException {
         var parameters = new OfferConfirmationParameters(
                 "a title",
                 "a description",
@@ -39,69 +48,8 @@ class ThymeLeafEmailGeneratorIT {
                 "http/deletion.com"
         );
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
-//TODO mettre ça dans un fichier
-        var expectedOutput = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Email</title>
-                    <style>
-                                
-                        .validation-button, .deletion-button {
-                            margin: 10px;
-                            color: white;
-                            border: none;
-                            padding: 10px;
-                        }
-                        .validation-button {
-                            background-color: deepskyblue;
-                        }
-                                
-                        .deletion-button {
-                            background-color: indianred;
-                        }
-                                
-                        button{
-                            ba: red;
-                        }
-                        .button-container {
-                            margin: 10px;
-                        }
-                                
-                        .text-bold {
-                            font-weight: bold;
-                        }
-                    </style>
-                </head>
-                <body>
-                <div>
-                    <div>
-                        <p>Bonjour <span ></span>,</p>
-                        <p>Voici le résumé de votre annonce Anti Gaspi</p>
-                    </div>
-                    <div>
-                        <p>Titre : <span class="text-bold">title1</span></p>
-                        <p>Description : <span>description1</span></p>
-                    </div>
-                                
-                    <div class="button-container">
-                        <a href="http://localhost:8080/validate/1">
-                            <button type="button" class="validation-button">Valider l'annonce</button>
-                        </a>
-                        <a href="">
-                            <button type="button" class="deletion-button">Supprimer l'annonce</button>
-                        </a>
-                    </div>
-                                
-                    <div>
-                        <p>Cordialement,</p>
-                        <p>L'équipe Anti Gaspi</p>
-                    </div>
-                </div>
-                                
-                </body>
-                </html>""";
-        assertThat(result).isEqualTo(expectedOutput);
+        File file = ResourceUtils.getFile("classpath:template/confirmation-email-test.html");
+        String expected = Files.readString(file.toPath());
+        assertThat(result).isEqualTo(expected);
     }
 }

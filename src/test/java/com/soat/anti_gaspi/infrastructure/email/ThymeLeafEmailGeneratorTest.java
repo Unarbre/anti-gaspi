@@ -1,5 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +44,7 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_call_factory() {
+    void should_call_factory() throws NotFoundException {
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
                 "t",
                 "d",
@@ -61,7 +62,7 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_call_engine_process() {
+    void should_call_engine_process() throws NotFoundException {
         Context ctx = new Context();
 
         when(emailThymeLeafContextFactory.createEmailTemplateContext(validOffer)).thenReturn(ctx);
@@ -72,7 +73,7 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_return_correct_template(){
+    void should_return_correct_template() throws NotFoundException {
         Context ctx = new Context();
         var expected = "EMAIL BODY";
 

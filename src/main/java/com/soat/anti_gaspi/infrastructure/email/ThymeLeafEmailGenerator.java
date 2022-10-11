@@ -1,5 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import javassist.NotFoundException;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
 
@@ -14,7 +15,7 @@ public class ThymeLeafEmailGenerator implements EmailGenerator {
         this.emailThymeLeafContextFactory = emailThymeLeafContextFactory;
     }
 
-    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) {
+    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NotFoundException {
 
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 

@@ -1,5 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import javassist.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ class EmailThymeLeafContextFactoryImplTest {
 
     private OfferConfirmationParameters nullOfferConfirmation = null;
 
+
+    // TODO On préfère le faire dans chaque classe pour éviter de perdre udtempsde process dans le cas où c'est pas fait.
     @BeforeEach
     public void init() {
         offer = new OfferConfirmationParameters(
@@ -29,9 +32,8 @@ class EmailThymeLeafContextFactoryImplTest {
     }
 
     @Test
-    void should_create_context_with_offer_parameters(){
+    void should_create_context_with_offer_parameters() throws NotFoundException {
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
-        // TODO test offer s'il est null'
         OfferConfirmationParameters offerConfirmationParameters = offer;
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 
@@ -49,7 +51,7 @@ class EmailThymeLeafContextFactoryImplTest {
     void should_throw_error_on_null_offer(){
         EmailThymeLeafContextFactory emailThymeLeafContextFactory = new EmailThymeLeafContextFactoryImpl();
         offer = null;
-        HttpClientErrorException.NotFound notFound = Assertions.assertThrows(HttpClientErrorException.NotFound.class, () -> {
+        NotFoundException notFound = Assertions.assertThrows(NotFoundException.class, () -> {
             emailThymeLeafContextFactory.createEmailTemplateContext(offer);
         });
 
