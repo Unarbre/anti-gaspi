@@ -20,7 +20,7 @@ spring:
     locations: classpath:db/migration
     table: flyway
   sendgrid:
-    api-key: ${CUSTOMCONNSTR_SENDGRID_API_KEY}
+    api-key: ${CUSTOMCONNSTR_SENDGRID_KEY}
     url: ${CUSTOMCONNSTR_SENDGRID_URL}
 senGrid:
   enabled: true

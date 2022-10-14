@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SendgridAsyncEmailSenderTest {
+class SendgridExceptionAsyncEmailSenderTest {
 
     @Autowired
     private SendgridAsyncEmailSender sendgridAsyncEmailSender;
-    // TODO : to test mail send, use wiremock
+
     @Test
     void test() throws UnableToSendEmailException {
         var emailInformation = new EmailInformation(
