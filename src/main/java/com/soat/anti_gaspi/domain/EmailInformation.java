@@ -27,4 +27,9 @@ public class EmailInformation {
     public String getBody() {
         return body;
     }
+
+    public Email getSender() {
+        return sender;
+    }
+
 }

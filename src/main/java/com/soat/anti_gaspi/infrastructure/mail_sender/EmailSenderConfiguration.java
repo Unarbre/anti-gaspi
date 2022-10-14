@@ -1,5 +1,7 @@
 package com.soat.anti_gaspi.infrastructure.mail_sender;
 
+import com.sendgrid.SendGrid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,10 +13,13 @@ import java.util.Properties;
 @Configuration
 public class EmailSenderConfiguration {
 
+    @Value("${senGrid.send-grid-api-key}")
+    String sendGridApiKey;
 
     @Bean
     public JavaMailSender javaMailSender() {
         // TODO variabiliser / mettre en spring property
+        
         var mailSender = new JavaMailSenderImpl();
 
         mailSender.setHost("smtp.gmail.com");
@@ -29,5 +34,12 @@ public class EmailSenderConfiguration {
         props.put("mail.debug", "true");
 
         return mailSender;
+    }
+
+    @Bean
+    public SendGrid sendGridMailSender() {
+        SendGrid sendGridClient = new SendGrid(sendGridApiKey);
+
+        return sendGridClient;
     }
 }
