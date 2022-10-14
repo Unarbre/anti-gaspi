@@ -2,10 +2,8 @@ package com.soat.anti_gaspi.infrastructure.mail_sender;
 
 import com.soat.anti_gaspi.domain.EmailInformation;
 import com.soat.anti_gaspi.domain.EmailSender;
-import com.soat.anti_gaspi.domain.exception.EnableToSendEmailException;
+import com.soat.anti_gaspi.domain.exception.UnableToSendEmailException;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 public class SendGridEmailSender implements EmailSender {
@@ -17,7 +15,7 @@ public class SendGridEmailSender implements EmailSender {
     }
 
     @Override
-    public void send(EmailInformation emailInformation) throws EnableToSendEmailException {
+    public void send(EmailInformation emailInformation) throws UnableToSendEmailException {
 //        SendGrid sendGridClient = emailSenderConfiguration.sendGridMailSender();
 //
 //        Email from = new Email(emailInformation.getSender().getValue());
