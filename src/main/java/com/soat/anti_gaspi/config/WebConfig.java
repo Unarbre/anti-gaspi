@@ -9,14 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig {
 
-    @Value("${CUSTOMCONNSTR_REACT_ENV:http://localhost:3000}") // TODO : remove default value
+    @Value("${CUSTOMCONNSTR_REACT_ENV}") // TODO : use configuration properties or simplify env to front.react-url
     private String REACT_APP;
 
-    @Value("${CUSTOMCONNSTR_ANGULAR_ENV:http://localhost:4200}") // TODO : remove default value
+    @Value("${CUSTOMCONNSTR_ANGULAR_ENV}") // TODO : use front.angular-url
     private String ANGULAR_APP;
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public WebMvcConfigurer corsConfigurer() { // TODO : find better way to allow origins than WebMvcConfigurer
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
