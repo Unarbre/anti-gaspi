@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.mail_sender;
 
-import com.sendgrid.SendGrid;
+//import com.sendgrid.SendGrid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,10 +36,10 @@ public class EmailSenderConfiguration {
         return mailSender;
     }
 
-    @Bean
-    public SendGrid sendGridMailSender() {
-        SendGrid sendGridClient = new SendGrid(sendGridApiKey);
-
-        return sendGridClient;
-    }
+//    @Bean
+//    public SendGrid sendGridMailSender() {
+//        SendGrid sendGridClient = new SendGrid(sendGridApiKey);
+//
+//        return sendGridClient;
+//    }
 }
