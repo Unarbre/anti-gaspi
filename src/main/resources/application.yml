@@ -25,5 +25,8 @@ spring:
 senGrid:
   enabled: true
   send-grid-api-key: SENDGRID_API_KEY
+sendgrid:
+  api-key: ${CUSTOMCONNSTR_SENDGRID_KEY}
+  url: ${CUSTOMCONNSTR_SENDGRID_URL}
 server:
   port: 8081
