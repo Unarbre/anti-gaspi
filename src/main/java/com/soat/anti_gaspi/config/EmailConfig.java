@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.net.http.HttpClient;
+
 
 @Configuration
 public class EmailConfig {
@@ -28,5 +30,10 @@ public class EmailConfig {
         }
         LOGGER.info("JavaMail is chosen.");
         return javaMailService;
+    }
+
+    @Bean
+    HttpClient httpClientFactory() {
+        return HttpClient.newHttpClient();
     }
 }

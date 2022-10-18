@@ -1,12 +1,14 @@
 package com.soat.anti_gaspi.infrastructure.mail_sender;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.soat.anti_gaspi.config.SendgridProperties;
 import com.soat.anti_gaspi.domain.EmailInformation;
 import com.soat.anti_gaspi.domain.EmailSender;
 import com.soat.anti_gaspi.domain.exception.UnableToSendEmailException;
 import com.soat.anti_gaspi.infrastructure.exception.SendgridException;
+import com.soat.anti_gaspi.infrastructure.mail_sender.dto.*;
+import com.soat.anti_gaspi.infrastructure.utility.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 
@@ -15,14 +17,19 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Component
 @Slf4j
 public class SendgridAsyncEmailSender implements EmailSender {
     private final SendgridProperties sendgridProperties;
+    private final HttpClient client;
+    private final JsonMapper jsonMapper;
 
-    public SendgridAsyncEmailSender(SendgridProperties sendgridProperties) {
+    public SendgridAsyncEmailSender(SendgridProperties sendgridProperties, HttpClient client, JsonMapper jsonMapper) {
         this.sendgridProperties = sendgridProperties;
+        this.client = client;
+        this.jsonMapper = jsonMapper;
     }
 
     @PostConstruct
@@ -35,23 +42,36 @@ public class SendgridAsyncEmailSender implements EmailSender {
     }
 
     @Override
-    public void send(EmailInformation mail) throws UnableToSendEmailException {
-        HttpClient client = HttpClient.newHttpClient();
+    public void send(EmailInformation mail) throws UnableToSendEmailException, JsonProcessingException {
         HttpRequest request = buildRequest(mail);
 
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> System.out.println(response.statusCode()));
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenAccept(stringHttpResponse -> {
+            log.info(stringHttpResponse.body());
+            // TODO : how to return success response ?
+        });
     }
 
-    private HttpRequest buildRequest(EmailInformation mail) {
+    private HttpRequest buildRequest(EmailInformation mail) throws JsonProcessingException {
         URI uri = URI.create(sendgridProperties.getUrl());
+
+        var content = new Content("text/html", mail.getBody());
+        var from = new From(mail.getSender().getValue());
+        var to = new To(mail.getReceiver().getValue());
+        var perzonalisation = new Personalization(List.of(to));
+        var personalizations = List.of(perzonalisation);
+        var sendgrid = new SendgridDto(
+                personalizations,
+                from,
+                mail.getTitle(),
+                List.of(content)
+        );
+        var body = jsonMapper.toJson(sendgrid);
 
         return HttpRequest.newBuilder()
                 .uri(uri)
-                .header("Content-type", MimeTypeUtils.APPLICATION_JSON_VALUE)
+                .header("Content-Type", MimeTypeUtils.APPLICATION_JSON_VALUE)
                 .header("Authorization", "Bearer " + sendgridProperties.getApiKey())
-                .POST(HttpRequest.BodyPublishers.ofString("{\"personalizations\": [{\"to\": [{\"email\": \"masataka.ishii@soat.fr\"}]}],\"from\": {\"email\": \"mohamed.el-barcani@soat.fr\"},\"subject\": \"Hello, World!\",\"content\": [{\"type\": \"text/html\", \"value\": \"Heya!\"}]"))
-                .build(); // TODO : create sendgrid email dto to build body of email
-                // TODO : use jackson object mapper to convert dto to json
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
     }
 }
