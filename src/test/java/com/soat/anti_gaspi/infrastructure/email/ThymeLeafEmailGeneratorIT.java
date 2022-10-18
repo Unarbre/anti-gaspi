@@ -1,37 +1,24 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
 import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.ResourceUtils;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
-// TODO config par défaut de l'import a retirer
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
 class ThymeLeafEmailGeneratorIT {
 
     @Autowired
-    private SpringTemplateEngine templateEngine;
-
-    @Autowired
-    private EmailThymeLeafContextFactory emailThymeLeafContextFactory;
-
     private ThymeLeafEmailGenerator htmlEmailGenerator;
 
-    // TODO remplacer le fichier dans test
-    @BeforeEach
-    void setup() {
-        // TODO authowired ça
-        htmlEmailGenerator = new ThymeLeafEmailGenerator(templateEngine, emailThymeLeafContextFactory);
-    }
-// TODO elaborer le test
     @Test
     void should_process_with_template_file_name_and_context() throws IOException, NullOfferConfirmationException {
         var parameters = new OfferConfirmationParameters(
@@ -53,12 +40,8 @@ class ThymeLeafEmailGeneratorIT {
     }
 
     @Test
-    void should_throw_MissingOffer_when_offer_confirmation_is_null() throws IOException, NullOfferConfirmationException {
-        OfferConfirmationParameters parameters = null;
-        var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
-
-        File file = ResourceUtils.getFile("classpath:email-template.fr/confirmation-email-test.html");
-        String expected = Files.readString(file.toPath());
-        assertThat(result).isEqualTo(expected);
+    void should_throw_MissingOffer_when_offer_confirmation_is_null() {
+        assertThatThrownBy(() -> htmlEmailGenerator.generateEmailFromTemplate(null))
+                .isExactlyInstanceOf(NullOfferConfirmationException.class);
     }
 }
