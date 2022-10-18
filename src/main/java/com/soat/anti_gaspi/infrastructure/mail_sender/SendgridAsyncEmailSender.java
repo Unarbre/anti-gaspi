@@ -45,10 +45,8 @@ public class SendgridAsyncEmailSender implements EmailSender {
     public void send(EmailInformation mail) throws UnableToSendEmailException, JsonProcessingException {
         HttpRequest request = buildRequest(mail);
 
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenAccept(stringHttpResponse -> {
-            log.info(stringHttpResponse.body());
-            // TODO : how to return success response ?
-        });
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(stringHttpResponse -> log.info(String.valueOf(stringHttpResponse.statusCode())));
     }
 
     private HttpRequest buildRequest(EmailInformation mail) throws JsonProcessingException {

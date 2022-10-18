@@ -16,7 +16,6 @@ public class ThymeLeafEmailGenerator implements EmailGenerator {
     }
 
     public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NullOfferConfirmationException {
-
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 
         return templateEngine.process(TEMPLATE_FILE_NAME, ctx);

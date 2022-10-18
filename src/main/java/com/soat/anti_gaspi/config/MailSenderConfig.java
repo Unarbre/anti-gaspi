@@ -1,6 +1,7 @@
 package com.soat.anti_gaspi.config;
 
-import com.soat.anti_gaspi.domain.usecases.SendConfirmationMailUsecase;
+import com.soat.anti_gaspi.domain.usecases.SendConfirmationMailUseCase;
+import com.soat.anti_gaspi.infrastructure.email.ThymeLeafEmailGenerator;
 import com.soat.anti_gaspi.infrastructure.mail_sender.GmailEmailSender;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class MailSenderConfig {
 
     @Bean
-    SendConfirmationMailUsecase createOfferFactory(GmailEmailSender mailSender) {
-        return new SendConfirmationMailUsecase(mailSender);
+    SendConfirmationMailUseCase createOfferFactory(ThymeLeafEmailGenerator emailGenerator, GmailEmailSender mailSender) {
+        return new SendConfirmationMailUseCase(emailGenerator, mailSender);
     }
 }
