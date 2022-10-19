@@ -16,8 +16,7 @@ public class EmailThymeLeafContextFactoryImpl implements EmailThymeLeafContextFa
 
         ctx.setVariable("title", offerConfirmationParameters.title());
         ctx.setVariable("description", offerConfirmationParameters.description());
-        ctx.setVariable("validateLink", offerConfirmationParameters.validateLink());
-        ctx.setVariable("rejectLink", offerConfirmationParameters.rejectLink());
+        ctx.setVariable("hash", offerConfirmationParameters.hash());
         ctx.setVariable("address", offerConfirmationParameters.address());
         ctx.setVariable("username", offerConfirmationParameters.username());
         ctx.setVariable("availabilityDate", offerConfirmationParameters.availabilityDate());

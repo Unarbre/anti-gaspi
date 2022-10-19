@@ -25,9 +25,7 @@ class ThymeLeafEmailGeneratorTest {
             "a",
             "01/02/03",
             "01/02/05",
-            "v",
-            "r"
-
+            "h"
     );
 
     @Mock
@@ -51,9 +49,7 @@ class ThymeLeafEmailGeneratorTest {
                 "a",
                 "01/02/03",
                 "01/02/05",
-                "v",
-                "r"
-
+                "h"
         );
         thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
 

@@ -9,7 +9,6 @@ public record OfferConfirmationParameters(
         String address,
         String availabilityDate,
         String expirationDate,
-        String validateLink,
-        String rejectLink) {
+        String hash) {
 }
 

@@ -25,8 +25,7 @@ class EmailThymeLeafContextFactoryImplTest {
                 "a",
                 "01/02/03",
                 "01/02/05",
-                "https://validation-link.com",
-                "https://deletion-link.com"
+                "oij98NIkjn"
         );
     }
 
